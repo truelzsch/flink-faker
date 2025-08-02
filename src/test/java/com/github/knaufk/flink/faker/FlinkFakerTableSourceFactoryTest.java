@@ -194,7 +194,13 @@ class FlinkFakerTableSourceFactoryTest {
     TableEnvironment tableEnv = TableEnvironment.create(settings);
     TableEnvironmentInternal tableEnvInternal = (TableEnvironmentInternal) tableEnv;
 
-    CatalogTable table = CatalogTable.of(schema, "comment", Arrays.asList(), properties);
+    CatalogTable table =
+        CatalogTable.newBuilder()
+            .schema(schema)
+            .comment("comment")
+            .partitionKeys(Arrays.asList())
+            .options(properties)
+            .build();
 
     return FactoryUtil.createDynamicTableSource(
         null,
